@@ -21,7 +21,7 @@ import jakarta.validation.constraints.Positive;
 // (ex: @Positive)
 public class CommandeService {
     // La couche "Service" utilise la couche "Accès aux données" pour effectuer les
-    // traitements
+    // traitement
     private final CommandeRepository commandeDao;
     private final ClientRepository clientDao;
     private final LigneRepository ligneDao;
