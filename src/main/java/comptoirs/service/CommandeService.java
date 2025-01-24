@@ -124,17 +124,7 @@ public class CommandeService {
     }
 
     /**
-     * Service métier : Enregistre l'expédition d'une commande connue par sa clé
-     * Règles métier :
-     * - la commande doit exister
-     * - la commande ne doit pas être déjà envoyée (le champ 'envoyeele' doit être
-     * null)
-     * - On renseigne la date d'expédition (envoyeele) avec la date du jour
-     * - Pour chaque produit dans les lignes de la commande :
-     * décrémente la quantité en stock (Produit.unitesEnStock) de la quantité dans
-     * la commande
-     * décrémente la quantité commandée (Produit.unitesCommandees) de la quantité
-     * dans la commande
+     
      *
      * @param commandeNum la clé de la commande
      * @return la commande mise à jour

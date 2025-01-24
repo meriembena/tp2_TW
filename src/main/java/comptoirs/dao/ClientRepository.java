@@ -14,7 +14,7 @@ import comptoirs.entity.Client;
 
 public interface ClientRepository extends JpaRepository<Client, String> {
     /**
-     * Calcule le nombre d'articles commandés par un client
+     
      * @param clientCode la clé du client
      */
     @Query("""
