@@ -42,7 +42,7 @@ public interface ClientRepository extends JpaRepository<Client, String> {
     int countDistinctProduitsByCode(String codeClient);
 
     /**
-     * Pour chaquee client, renvoyer le nombre de produits différents qu'il a commandés
+     * Pour chaque client, renvoyer le nombre de produits différents qu'il a commandés
      * @return une liste de projections contenant la société du client et le nombre de produits différents commandés
      */
     @Query("SELECT l.commande.client.societe as societe, COUNT(DISTINCT l.produit.reference) AS nombre FROM Ligne l GROUP BY societe")

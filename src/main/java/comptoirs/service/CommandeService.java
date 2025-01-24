@@ -44,7 +44,7 @@ public class CommandeService {
      * - le client doit exister
      * - On initialise l'adresse de livraison avec l'adresse du client
      * - Si le client a déjà commandé plus de 100 articles, on lui offre une remise
-     * de 15%
+     
      *
      * @param clientCode la clé du client
      * @return la commande créée
