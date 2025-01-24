@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import comptoirs.dao.ClientRepository;
 import comptoirs.dao.CommandeRepository;
@@ -14,7 +14,6 @@ import comptoirs.dao.LigneRepository;
 import comptoirs.dao.ProduitRepository;
 import comptoirs.entity.Commande;
 import comptoirs.entity.Ligne;
-
 import jakarta.validation.constraints.Positive;
 
 @Service
@@ -106,8 +105,22 @@ public class CommandeService {
      */
     @Transactional
     public Ligne ajouterLigne(int commandeNum, int produitRef, @Positive int quantite) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        var commande = commandeDao.findById(commandeNum).orElseThrow();
+        if (commande.getEnvoyeele() != null) {
+            throw new IllegalStateException("La commande a déjà été envoyée");
+        }
+        var produit = produitDao.findById(produitRef).orElseThrow();
+        if (produit.isIndisponible()) {
+            throw new IllegalStateException("Le produit est indisponible");
+        }
+        if (produit.getUnitesEnStock() < produit.getUnitesCommandees() + quantite) {
+            throw new IllegalStateException("Pas assez de stock pour cette commande");
+        }
+        var ligne = new Ligne(commande, produit, quantite);
+        ligneDao.save(ligne);
+        produit.setUnitesCommandees(produit.getUnitesCommandees() + quantite);
+        produitDao.save(produit);
+        return ligne;
     }
 
     /**
@@ -130,7 +143,18 @@ public class CommandeService {
      */
     @Transactional
     public Commande enregistreExpedition(int commandeNum) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        var commande = commandeDao.findById(commandeNum).orElseThrow();
+        if (commande.getEnvoyeele() != null) {
+            throw new IllegalStateException("La commande a déjà été envoyée");
+        }
+        commande.setEnvoyeele(LocalDate.now());
+        for (var ligne : commande.getLignes()) {
+            var produit = ligne.getProduit();
+            produit.setUnitesEnStock(produit.getUnitesEnStock() - ligne.getQuantite());
+            produit.setUnitesCommandees(produit.getUnitesCommandees() - ligne.getQuantite());
+            produitDao.save(produit);
+        }
+        commandeDao.save(commande);
+        return commande;
     }
 }
