@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import comptoirs.entity.Client;
 
-// This will be AUTO IMPLEMENTED by Spring into a Bean called ProductCodeRepository
+// This will be AUT IMPLEMENTED by Spring into a Bean called ProductCodeRepository
 // CRUD refers Create, Read, Update, Delete
 
 public interface ClientRepository extends JpaRepository<Client, String> {

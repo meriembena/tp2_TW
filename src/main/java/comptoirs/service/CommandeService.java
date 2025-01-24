@@ -46,7 +46,7 @@ public class CommandeService {
      * - Si le client a déjà commandé plus de 100 articles, on lui offre une remise
      
      *
-     * @param clientCode la clé du client
+     * @param clientCode la clé du clien
      * @return la commande créée
      * @throws java.util.NoSuchElementException si le client n'existe pas
      */
